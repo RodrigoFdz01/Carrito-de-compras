@@ -11,8 +11,8 @@ const fragment = document.createDocumentFragment();
 document.addEventListener("DOMContentLoaded", () => {
   fetchData();
   //local storage
-  if(localStorage.getItem('carrito')){
-    carrito = JSON.parse(localStorage.getItem('carrito'));
+  if (localStorage.getItem("carrito")) {
+    carrito = JSON.parse(localStorage.getItem("carrito"));
     pintarCarrito();
   }
 });
@@ -21,9 +21,9 @@ cards.addEventListener("click", (e) => {
   addCarrito(e);
 });
 
-items.addEventListener('click', e => {
- btnAccion(e);
-})
+items.addEventListener("click", (e) => {
+  btnAccion(e);
+});
 
 //addCarrito es el evento
 const addCarrito = (e) => {
@@ -60,7 +60,7 @@ const pintarCarrito = () => {
     templateCarrito.querySelectorAll("td")[0].textContent = producto.title;
     templateCarrito.querySelectorAll("td")[1].textContent = producto.cantidad;
     //botones
-    templateCarrito.querySelector(".btn-info").dataset.id = producto.id;
+    templateCarrito.querySelector(".btn-success").dataset.id = producto.id;
     templateCarrito.querySelector(".btn-danger").dataset.id = producto.id;
     templateCarrito.querySelector("span").textContent =
       producto.cantidad * producto.precio;
@@ -68,12 +68,12 @@ const pintarCarrito = () => {
     const clone = templateCarrito.cloneNode(true);
     fragment.appendChild(clone);
   });
-  //abajo pintar la info en items de la tabla
+  //abajo pintar la success en items de la tabla
   items.appendChild(fragment);
 
   pintarFooter();
-  //stringyfy lo pasamos de texto plano a coleccion de objeto 
-  localStorage.setItem('carrito',JSON.stringify(carrito))
+  //stringyfy lo pasamos de texto plano a coleccion de objeto
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 };
 
 const pintarFooter = () => {
@@ -85,55 +85,62 @@ const pintarFooter = () => {
   }
 
   // sumar cantidad y sumar totales
-  const nCantidad = Object.values(carrito).reduce((acumulador, {cantidad}) => acumulador + cantidad,0);
+  const nCantidad = Object.values(carrito).reduce(
+    (acumulador, { cantidad }) => acumulador + cantidad,
+    0
+  );
   //console.log(nCantidad);
-  
-  const nPrecio = Object.values(carrito).reduce((acumulador, {cantidad,precio}) => acumulador + cantidad * precio , 0);
+
+  const nPrecio = Object.values(carrito).reduce(
+    (acumulador, { cantidad, precio }) => acumulador + cantidad * precio,
+    0
+  );
   //console.log(nPrecio);
-  templateFooter.querySelectorAll('td')[0].textContent = nCantidad;
-  templateFooter.querySelector('span').textContent = nPrecio;
+  templateFooter.querySelectorAll("td")[0].textContent = nCantidad;
+  templateFooter.querySelector("span").textContent = nPrecio;
   //ahora a clonar el template
   const clone = templateFooter.cloneNode(true);
   fragment.appendChild(clone);
   footer.appendChild(fragment);
 
-const btnVaciar = document.getElementById('vaciar-carrito');
-btnVaciar.addEventListener('click', () => {
- carrito = {};
- pintarCarrito();
-})
+  const btnVaciar = document.getElementById("vaciar-carrito");
+  btnVaciar.addEventListener("click", () => {
+    carrito = {};
+    pintarCarrito();
+  });
 };
 
-
 //detecto botones
-const btnAccion = e => {
+const btnAccion = (e) => {
   //console.log(e.target)
-  if(e.target.classList.contains('btn-info')){
-    console.log(carrito[e.target.dataset.id])
-  const producto = carrito[e.target.dataset.id]
-  //producto.cantidad = carrito[e.target.dataset.id].cantidad +1;
-  producto.cantidad++;
-  carrito[e.target.dataset.id] = {...producto};
- pintarCarrito();
+  //Accion de sumar +
+  if (e.target.classList.contains("btn-success")) {
+    // console.log(carrito[e.target.dataset.id]);
+    const producto = carrito[e.target.dataset.id];
+    //producto.cantidad = carrito[e.target.dataset.id].cantidad +1;
+    producto.cantidad++;
+    carrito[e.target.dataset.id] = { ...producto };
+    pintarCarrito();
+  }
+  //Accion de restar -
 
+  if (e.target.classList.contains("btn-danger")) {
+    const producto = carrito[e.target.dataset.id];
+    producto.cantidad--;
+    if (producto.cantidad === 0) {
+      delete carrito[e.target.dataset.id]; // elimina solo el obj q tiene ese index
+    }
+    pintarCarrito();
   }
- if(e.target.classList.contains('btn-danger')){
-  const producto = carrito[e.target.dataset.id]
-  producto.cantidad--;
-  if(producto.cantidad === 0){
-    delete carrito[e.target.dataset.id]
-  }
- pintarCarrito();
- }
-// 
-e.stopPropagation();
-}
+  //
+  e.stopPropagation();
+};
 
 const fetchData = async () => {
   try {
     const resp = await fetch("api.json");
     const data = await resp.json();
-    //console.log(data);
+    // console.log(data);
     pintarCard(data);
   } catch (error) {
     console.log(error);
@@ -141,7 +148,7 @@ const fetchData = async () => {
 };
 
 const pintarCard = (data) => {
-  console.log(data);
+  // console.log(data); trae un array de obejtos como el file json
   data.forEach(function (producto) {
     templateCard.querySelector("h5").textContent = producto.title;
     templateCard.querySelector("p").textContent = producto.precio;
