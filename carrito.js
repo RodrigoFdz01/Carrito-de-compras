@@ -28,8 +28,8 @@ items.addEventListener("click", (e) => {
 //addCarrito es el evento
 const addCarrito = (e) => {
   // console.log(e.target);
-  //console.log(e.target.classList.contains("btn-info"));
-  if (e.target.classList.contains("btn-info")) {
+  //console.log(e.target.classList.contains("btn-secondary"));
+  if (e.target.classList.contains("btn-secondary")) {
     // console.log(e.target.parentElement);
     setCarrito(e.target.parentElement);
   }
@@ -40,7 +40,7 @@ const setCarrito = (objeto) => {
   //console.log(objeto);
   //abajo construyo el obj (producto)
   const producto = {
-    id: objeto.querySelector(".btn-info").dataset.id,
+    id: objeto.querySelector(".btn-secondary").dataset.id,
     title: objeto.querySelector("h5").textContent,
     precio: objeto.querySelector("p").textContent,
     cantidad: 1,
@@ -155,7 +155,7 @@ const pintarCard = (data) => {
     templateCard
       .querySelector("img")
       .setAttribute("src", producto.thumbnailUrl);
-    templateCard.querySelector(".btn-info").dataset.id = producto.id;
+    templateCard.querySelector(".btn-secondary").dataset.id = producto.id;
 
     const clone = templateCard.cloneNode(true);
 
