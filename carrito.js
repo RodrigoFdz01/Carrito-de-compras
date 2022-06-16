@@ -53,7 +53,7 @@ const setCarrito = (objeto) => {
 };
 
 const pintarCarrito = () => {
-  console.log(carrito);
+  // console.log(carrito);
   items.innerHTML = "";
   Object.values(carrito).forEach((producto) => {
     templateCarrito.querySelector("th").textContent = producto.id;
@@ -112,7 +112,6 @@ const pintarFooter = () => {
 
 //detecto botones
 const btnAccion = (e) => {
-  //console.log(e.target)
   //Accion de sumar +
   if (e.target.classList.contains("btn-success")) {
     // console.log(carrito[e.target.dataset.id]);
