@@ -147,7 +147,7 @@ const fetchData = async () => {
 };
 
 const pintarCard = (data) => {
-  // console.log(data); trae un array de obejtos como el file json
+  console.log(data); //trae un array de obejtos como el file json
   data.forEach(function (producto) {
     templateCard.querySelector("h5").textContent = producto.title;
     templateCard.querySelector("p").textContent = producto.precio;
