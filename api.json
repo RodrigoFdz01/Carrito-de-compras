@@ -20,21 +20,20 @@
   {
     "precio": 50,
     "id": 4,
-    "title": "Sandía",
+    "title": "Fruta",
     "thumbnailUrl": "https://picsum.photos/id/30/600"
   },
   {
     "precio": 12,
     "id": 5,
-    "title": "Mango",
+    "title": "Coca",
     "thumbnailUrl": "https://picsum.photos/id/40/600"
   },
-  
+
   {
     "precio": 140,
     "id": 6,
-    "title": "Frutilla",
+    "title": "Cookies",
     "thumbnailUrl": "https://picsum.photos/id/50/600"
   }
-  
 ]
